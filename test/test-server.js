@@ -31,8 +31,8 @@ describe('Blog Posts', function() {
           item.should.have.all.keys(
             'id', 'title', 'content', 'author', 'publishDate')
         });
+        done();        
       });
-    done();
   });
 
   it('should add a blog post on POST', function(done) {
@@ -53,9 +53,9 @@ describe('Blog Posts', function() {
         res.body.should.have.all.keys(expectedKeys);
         res.body.title.should.equal(newPost.title);
         res.body.content.should.equal(newPost.content);
-        res.body.author.should.equal(newPost.author)
+        res.body.author.should.equal(newPost.author);
+        done();
       });
-      done();
   });
 
   it('should error if POST missing expected values', function(done) {
@@ -65,8 +65,8 @@ describe('Blog Posts', function() {
       .send(badRequestData)
       .end(function(err, res) {
         res.should.have.status(400);
+        done();
       })
-    done();
   });
 
   it('should update blog posts on PUT', function(done) {
@@ -85,9 +85,9 @@ describe('Blog Posts', function() {
           .end(function(err, res) {
             res.should.have.status(204);
             res.should.be.json;
+            done();
           });
       })
-      done();
   });
 
   it('should delete posts on DELETE', function(done) {
@@ -99,9 +99,9 @@ describe('Blog Posts', function() {
           .delete(`/blog-posts/${res.body[0].id}`)
           .end(function(err, res) {
             res.should.have.status(204);
+            done();
           });
       })
-      done();
   });
 
 });
