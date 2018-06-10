@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const blogPostsRouter = require('./blogPostsRouter');
 const app = express();
 
-
 app.use(morgan('common'));
+app.use(express.json());
 
 // you need to import `blogPostsRouter` router and route
 // requests to HTTP requests to `/blog-posts` to `blogPostsRouter`
@@ -26,7 +26,7 @@ function runServer() {
       console.log(`Your app is listening on port ${port}`);
       resolve(server);
     }).on('error', err => {
-      reject(err)
+      reject(err);
     });
   });
 }
@@ -52,6 +52,6 @@ function closeServer() {
 // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
   runServer().catch(err => console.error(err));
-};
+}
 
 module.exports = {app, runServer, closeServer};

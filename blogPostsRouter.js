@@ -1,20 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
-
 const {BlogPosts} = require('./models');
 
 // convenience function for generating lorem text for blog
 // posts we initially add below
 function lorem() {
   return "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod " +
-    "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, "
+    "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, " +
     "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo " +
     "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse " +
     "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non " +
-    "proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 }
 
 // seed some posts so initial GET requests will return something
@@ -38,13 +35,13 @@ router.get('/', (req, res) => {
 // the id, which `BlogPosts` will create. This endpoint should
 // send a 400 error if the post doesn't contain
 // `title`, `content`, and `author`
-router.post('/', jsonParser, (req, res) => {
+router.post('/', (req, res) => {
   // ensure `name` and `budget` are in request body
   const requiredFields = ['title', 'content', 'author'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
+      const message = `Missing \`${field}\` in request body`;
       console.error(message);
       return res.status(400).send(message);
     }
@@ -61,13 +58,13 @@ router.post('/', jsonParser, (req, res) => {
 // the post matches the id of the path variable, and that the
 // following required fields are in request body: `id`, `title`,
 // `content`, `author`, `publishDate`
-router.put('/:id', jsonParser, (req, res) => {
+router.put('/:id', (req, res) => {
   const requiredFields = [
   	'id', 'title', 'content', 'author', 'publishDate'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
+      const message = `Missing \`${field}\` in request body`;
       console.error(message);
       return res.status(400).send(message);
     }
@@ -80,7 +77,7 @@ router.put('/:id', jsonParser, (req, res) => {
     return res.status(400).send(message);
   }
   console.log(`Updating blog post with id \`${req.params.id}\``);
-  const updatedItem = BlogPosts.update({
+  BlogPosts.update({
     id: req.params.id,
     title: req.body.title,
     content: req.body.content,
