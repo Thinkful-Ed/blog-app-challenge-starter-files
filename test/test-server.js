@@ -29,7 +29,7 @@ describe('Blog Posts', function() {
         res.body.forEach(function(item) {
           expect(item).to.be.a('object');
           expect(item).to.have.all.keys(
-            'id', 'title', 'content', 'author', 'publishDate')
+            'id', 'title', 'content', 'author', 'publishDate');
         });
       });
   });
@@ -52,7 +52,7 @@ describe('Blog Posts', function() {
         expect(res.body).to.have.all.keys(expectedKeys);
         expect(res.body.title).to.equal(newPost.title);
         expect(res.body.content).to.equal(newPost.content);
-        expect(res.body.author).to.equal(newPost.author)
+        expect(res.body.author).to.equal(newPost.author);
       });
   });
 
@@ -61,7 +61,7 @@ describe('Blog Posts', function() {
     return chai.request(app)
       .post('/blog-posts')
       .send(badRequestData)
-      .catch(function(res) {
+      .then(function(res) {
         expect(res).to.have.status(400);
       });
   });
