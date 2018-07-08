@@ -1,15 +1,15 @@
-const express = require('express');
-const morgan = require('morgan');
+const express = require("express");
+const morgan = require("morgan");
 
-const blogPostsRouter = require('./blogPostsRouter');
+const blogPostsRouter = require("./blogPostsRouter");
 const app = express();
 
-app.use(morgan('common'));
+app.use(morgan("common"));
 app.use(express.json());
 
 // you need to import `blogPostsRouter` router and route
 // requests to HTTP requests to `/blog-posts` to `blogPostsRouter`
-app.use('/blog-posts', blogPostsRouter);
+app.use("/blog-posts", blogPostsRouter);
 
 // both runServer and closeServer need to access the same
 // server object, so we declare `server` here, and then when
@@ -22,12 +22,14 @@ let server;
 function runServer() {
   const port = process.env.PORT || 8080;
   return new Promise((resolve, reject) => {
-    server = app.listen(port, () => {
-      console.log(`Your app is listening on port ${port}`);
-      resolve(server);
-    }).on('error', err => {
-      reject(err);
-    });
+    server = app
+      .listen(port, () => {
+        console.log(`Your app is listening on port ${port}`);
+        resolve(server);
+      })
+      .on("error", err => {
+        reject(err);
+      });
   });
 }
 
@@ -36,7 +38,7 @@ function runServer() {
 // create one.
 function closeServer() {
   return new Promise((resolve, reject) => {
-    console.log('Closing server');
+    console.log("Closing server");
     server.close(err => {
       if (err) {
         reject(err);
@@ -54,4 +56,4 @@ if (require.main === module) {
   runServer().catch(err => console.error(err));
 }
 
-module.exports = {app, runServer, closeServer};
+module.exports = { app, runServer, closeServer };
